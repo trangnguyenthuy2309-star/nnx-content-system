@@ -1,0 +1,522 @@
+/* xFinance Carousel — Editorial Template (rebuild 2026-05-05)
+   Style:  Light editorial · Serif italic moments · Warm white background
+   Mood:   Calm, formal, breathing room — for principles & insights content
+   Fonts:  Cormorant Garamond (serif italic) + Plus Jakarta Sans (body sans)
+   Format: 1:1 1080×1080 default
+
+   Per layout-composition.md:
+   - Every .s-[type] .body MUST declare display:flex, flex-direction:column,
+     justify-content:center (WeasyPrint does not cascade these reliably).
+   - Fill ratio target: 60–75% body height.
+   - Negative margins forbidden unless declared in structure.md.
+   - max-width blocks always carry align-self: center.
+
+   Per weasyprint-compat.md:
+   - No display:inline-flex anywhere → use display:table for shrink-wrap.
+   - No align-items:baseline → use flex-end.
+   - No border-radius on ::before/::after pseudo-elements.
+   - No emoji — use ASCII / Unicode arrows only.
+   - All decorative position:absolute children of .slide hidden in @media print.
+
+   To use other ratios, add to slide HTML <style>:
+     :root { --slide-w: 1920px; --slide-h: 1080px; }    16:9
+     :root { --slide-w: 1080px; --slide-h: 1350px; }    4:5
+     :root { --slide-w: 1080px; --slide-h: 1920px; }    9:16
+   And override @media print { @page { size: WIDTH HEIGHT; } } in the same slide.
+*/
+
+/* ── Font loading ─────────────────────────────────────────────
+   Browser: Google Fonts via <link> tag in each slide HTML.
+   WeasyPrint: @font-face local fallback to Georgia / system-ui.
+   For perfect WeasyPrint render, install fonts on the host machine.
+*/
+@font-face {
+  font-family: 'Cormorant Garamond';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Cormorant Garamond Regular'), local('CormorantGaramond-Regular'),
+       local('Georgia'), local('DejaVu Serif');
+}
+@font-face {
+  font-family: 'Cormorant Garamond';
+  font-style: italic;
+  font-weight: 400;
+  src: local('Cormorant Garamond Italic'), local('CormorantGaramond-Italic'),
+       local('Georgia Italic'), local('DejaVu Serif Italic');
+}
+@font-face {
+  font-family: 'Cormorant Garamond';
+  font-style: italic;
+  font-weight: 600;
+  src: local('Cormorant Garamond SemiBold Italic'), local('CormorantGaramond-SemiBoldItalic'),
+       local('Georgia Bold Italic'), local('DejaVu Serif Bold Italic');
+}
+
+/* ── Tokens ───────────────────────────────────────────────── */
+:root {
+  /* Aspect ratio (default 1:1) */
+  --slide-w: 1080px;
+  --slide-h: 1080px;
+
+  /* Editorial palette — full Kem background */
+  --bg:        #FAF6F0;             /* Kem — warm white */
+  --bg-2:      #F2ECE2;             /* Kem darker */
+  --text:      #2D2A26;             /* Than */
+  --text-2:    rgba(45,42,38,.62);  /* muted */
+  --text-3:    rgba(45,42,38,.42);  /* extra muted */
+  --grey-box:  #E2D9CE;             /* Signature warm grey */
+  --accent:    #C9572C;             /* Đất nung */
+  --accent-2:  #2A8A7F;             /* Ngọc */
+  --line:      rgba(45,42,38,.14);
+  --line-2:    rgba(45,42,38,.08);
+
+  /* Fonts */
+  --font-serif: 'Cormorant Garamond', 'Georgia', 'DejaVu Serif', serif;
+  --font-sans:  'Plus Jakarta Sans', 'Inter', system-ui, sans-serif;
+
+  /* Spacing scale */
+  --pad-slide-y-top: 64px;
+  --pad-slide-y-bot: 56px;
+  --pad-slide-x:     80px;
+}
+
+* { box-sizing: border-box; }
+html, body {
+  margin: 0; padding: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  overflow: hidden;
+  height: 100%;
+}
+
+/* ── Stage (browser scaling wrapper) ─────────────────────── */
+.stage {
+  position: fixed; top: 0; right: 0; bottom: 0; left: 0;
+  display: flex; align-items: center; justify-content: center;
+}
+
+/* ── Slide canvas ─────────────────────────────────────────
+   Grid 12×12 conceptually; technically 3 rows (header/body/footer).
+   Padding: 64 80 56 — working area = 920 × 960 inside 1080×1080.
+*/
+.slide {
+  width: var(--slide-w); height: var(--slide-h);
+  background: var(--bg);
+  position: relative; overflow: hidden;
+  transform-origin: center center;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  padding: var(--pad-slide-y-top) var(--pad-slide-x) var(--pad-slide-y-bot);
+}
+
+/* ── WeasyPrint print rules ──────────────────────────────── */
+@media print {
+  @page { size: 1080px 1080px; margin: 0; }
+  html, body {
+    width: var(--slide-w); height: var(--slide-h);
+    overflow: visible; background: transparent;
+  }
+  .stage {
+    position: static; display: block;
+    width: var(--slide-w); height: var(--slide-h);
+  }
+  .slide {
+    width: var(--slide-w); height: var(--slide-h);
+    transform: none !important; visibility: visible;
+    page-break-after: always; break-after: page;
+  }
+  /* Hide decorations + UI helpers in PDF */
+  .corner-tl, .corner-tr, .corner-bl, .corner-br, .deco { display: none !important; }
+  .nav-hint, .btn.ghost { display: none !important; }
+  .s-foot .progress { display: none !important; }
+}
+
+/* ── Header ──────────────────────────────────────────────── */
+.s-head {
+  display: flex; align-items: center; justify-content: space-between;
+  position: relative; z-index: 5;
+}
+.logo { display: flex; align-items: center; }
+.logo img { display: block; height: 36px; width: auto; object-fit: contain; }
+.s-head .topic {
+  font-size: 11px; letter-spacing: .22em; text-transform: uppercase;
+  color: var(--text-2); font-weight: 600;
+  white-space: nowrap;
+}
+
+/* ── Footer ──────────────────────────────────────────────── */
+.s-foot {
+  display: flex; align-items: center; justify-content: space-between;
+  padding-top: 16px; border-top: 1px solid var(--line);
+  font-size: 11px; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--text-2); font-weight: 500;
+  position: relative; z-index: 5;
+}
+.s-foot .name {
+  font-style: italic; font-weight: 400; font-family: var(--font-serif);
+  letter-spacing: .04em; text-transform: none;
+  font-size: 14px;
+}
+.s-foot .count { color: var(--text); font-weight: 700; white-space: nowrap; }
+.s-foot .count b { color: var(--accent); }
+.s-foot .progress {
+  flex: 1; max-width: 160px; height: 1px;
+  background: var(--line); margin: 0 20px;
+  position: relative; overflow: hidden;
+}
+.s-foot .progress::after {
+  content: ""; position: absolute; left: 0; top: 0; bottom: 0;
+  background: var(--accent); width: var(--p, 10%);
+}
+
+/* ── Body base — applies to all slide types unless overridden ──
+   layout-composition.md § 3.1: default justify-content: center.
+*/
+.body {
+  position: relative;
+  display: flex; flex-direction: column; justify-content: center;
+  padding: 0;
+}
+
+/* ── Signature element: grey-box ─────────────────────────────
+   Warm grey block holding serif italic phrase.
+   Used in: Cover (highlight phrase), Numbered (principle),
+            Insight (the line), CTA (emotional close).
+*/
+.grey-box {
+  background: var(--grey-box);
+  padding: 28px 40px;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+  color: var(--text);
+  text-align: center;
+  letter-spacing: -.005em;
+}
+
+/* ── Reusable utilities ────────────────────────────────────── */
+.eyebrow {
+  font-family: var(--font-sans);
+  font-size: 12px; letter-spacing: .26em; text-transform: uppercase;
+  color: var(--text-2); font-weight: 700;
+  white-space: nowrap;
+}
+.eyebrow.accent { color: var(--accent-2); }
+.eyebrow.warm   { color: var(--accent); }
+
+.tag {
+  display: flex; align-items: center; gap: 12px;
+  font-size: 12px; letter-spacing: .22em; text-transform: uppercase;
+  color: var(--accent-2); font-weight: 700; white-space: nowrap;
+}
+.tag::before { content: ""; width: 22px; height: 2px; background: var(--accent-2); flex-shrink: 0; }
+
+.ul-acc {
+  display: block; width: 56px; height: 2px;
+  background: var(--accent); margin: 0;
+}
+
+/* CTA button — display:table for WeasyPrint shrink-wrap */
+.btn {
+  display: table;
+  background: var(--accent); color: #FAF6F0;
+  font-family: var(--font-sans);
+  font-weight: 700; font-size: 14px;
+  letter-spacing: .18em; text-transform: uppercase;
+  padding: 18px 30px; border-radius: 4px;
+  text-decoration: none; white-space: nowrap;
+}
+.btn.ghost {
+  background: transparent;
+  border: 1px solid var(--line);
+  color: var(--text);
+}
+
+/* ─────────────────────────────────────────────────────────────
+   SLIDE-TYPE BODY OVERRIDES
+   Each .s-[type] .body MUST declare display:flex,
+   flex-direction:column, justify-content:center explicitly.
+   (WeasyPrint cascade reliability — see weasyprint-compat.md § 12)
+   ──────────────────────────────────────────────────────────── */
+
+/* ── Slide 1: Cover ────────────────────────────────────────
+   Focal anchor: H1 (sans 80px) + grey-box phrase (serif italic 56px).
+   Stack center: eyebrow → H1 → grey-box → byline → arrow (bottom-right).
+*/
+.s-cover .body {
+  display: flex; flex-direction: column; justify-content: center;
+  gap: 20px; padding: 0;
+}
+.s-cover .eyebrow {
+  margin-bottom: 8px;
+}
+.s-cover h1 {
+  font-family: var(--font-sans);
+  font-size: 80px; font-weight: 800;
+  line-height: 1.02; letter-spacing: -.035em;
+  color: var(--text); margin: 0;
+}
+.s-cover .hl-box {
+  display: block; align-self: stretch;
+  background: var(--grey-box);
+  padding: 22px 36px;
+  font-family: var(--font-serif); font-style: italic;
+  font-size: 56px; font-weight: 400;
+  line-height: 1.12; letter-spacing: -.01em;
+  color: var(--text);
+  text-align: left;
+}
+.s-cover .author {
+  font-family: var(--font-serif); font-style: italic;
+  font-size: 18px; color: var(--text-2);
+  font-weight: 400; letter-spacing: .02em;
+  margin: 0;
+}
+.s-cover .arrow-row {
+  display: flex; justify-content: flex-end; align-items: center;
+  margin-top: 12px;
+}
+.s-cover .arrow {
+  width: 56px; height: 56px;
+  background: var(--accent); border-radius: 999px;
+  display: flex; align-items: center; justify-content: center;
+  text-decoration: none; flex-shrink: 0;
+  font-size: 22px; color: #FAF6F0;
+  font-family: var(--font-sans);
+}
+
+/* ── Slide 2: Context Stat ────────────────────────────────
+   Focal anchor: big number (Đất nung 200px).
+   Vertical stacked (NOT horizontal table — WeasyPrint clip bug).
+   Stack center: eyebrow → big-num → headline italic → body → source.
+*/
+.s-stat .body {
+  display: flex; flex-direction: column; justify-content: center;
+  gap: 18px; padding: 0;
+}
+.s-stat .eyebrow { color: var(--accent-2); }
+.s-stat .num-mark {
+  display: flex; align-items: flex-end; gap: 8px;
+  margin-top: 4px;
+}
+.s-stat .big-num {
+  font-family: var(--font-sans); font-weight: 800;
+  font-size: 200px; line-height: .85;
+  color: var(--accent);
+  letter-spacing: -.04em;
+}
+.s-stat .of {
+  font-family: var(--font-sans); font-weight: 800;
+  font-size: 72px; color: var(--accent);
+  margin-bottom: 8px;
+}
+.s-stat .headline {
+  font-family: var(--font-serif); font-style: italic;
+  font-size: 44px; font-weight: 400;
+  line-height: 1.18; color: var(--text);
+  margin: 8px 0 0; max-width: 820px;
+}
+.s-stat .headline em {
+  font-family: var(--font-serif); font-style: italic;
+  font-weight: 600; color: var(--accent);
+  font-size: 1em;
+}
+.s-stat .body-text {
+  font-family: var(--font-sans);
+  font-size: 20px; font-weight: 400;
+  line-height: 1.6; color: var(--text-2);
+  margin: 4px 0 0; max-width: 760px;
+}
+.s-stat .src {
+  font-family: var(--font-sans);
+  font-size: 12px; color: var(--text-3);
+  font-weight: 500; letter-spacing: .06em;
+  margin-top: 4px;
+}
+
+/* ── Slide 3–7: Numbered ──────────────────────────────────
+   Focal anchor: grey-box (principle text in serif italic).
+   Stack center: tag(label+counter) → H2 → grey-box → body → page-num.
+*/
+.s-num .body {
+  display: flex; flex-direction: column; justify-content: center;
+  gap: 18px; padding: 0;
+}
+.s-num .label-row {
+  display: flex; align-items: center; gap: 16px;
+}
+.s-num .label-row .label {
+  font-family: var(--font-sans);
+  font-size: 12px; letter-spacing: .26em; text-transform: uppercase;
+  color: var(--accent-2); font-weight: 700;
+  white-space: nowrap;
+}
+.s-num .label-row .label::before {
+  content: ""; display: inline-block;
+  width: 28px; height: 2px; background: var(--accent-2);
+  margin-right: 14px; vertical-align: middle;
+}
+.s-num .label-row .num-count {
+  font-family: var(--font-sans);
+  font-size: 12px; font-weight: 700;
+  color: var(--text-3); letter-spacing: .12em;
+  white-space: nowrap;
+}
+.s-num h2 {
+  font-family: var(--font-sans);
+  font-size: 56px; font-weight: 800;
+  line-height: 1.06; letter-spacing: -.025em;
+  color: var(--text); margin: 0;
+}
+.s-num .grey-box {
+  align-self: stretch;
+  padding: 24px 36px;
+  font-size: 40px;
+  line-height: 1.18;
+  text-align: center;
+}
+.s-num .body-text {
+  font-family: var(--font-sans);
+  font-size: 20px; font-weight: 400;
+  line-height: 1.6; color: var(--text-2);
+  margin: 0; max-width: 820px;
+  align-self: center;
+  text-align: center;
+}
+
+/* ── Slide 8: Quote ───────────────────────────────────────
+   Focal anchor: quote-card centered both axes.
+   Stack: avatar → blockquote serif italic → attribution.
+*/
+.s-quote .body {
+  display: flex; flex-direction: column; justify-content: center;
+  align-items: center;
+  gap: 0; padding: 0;
+}
+.s-quote .quote-card {
+  background: var(--grey-box);
+  border-radius: 6px;
+  padding: 56px 60px 48px;
+  text-align: center;
+  max-width: 820px;
+  align-self: center;
+}
+.s-quote .avatar {
+  width: 64px; height: 64px;
+  border-radius: 999px;
+  background: rgba(45,42,38,.20);
+  margin: 0 auto 24px;
+  display: block;
+}
+.s-quote blockquote {
+  font-family: var(--font-serif);
+  font-style: italic; font-size: 44px;
+  font-weight: 400; line-height: 1.24;
+  letter-spacing: -.005em;
+  color: var(--text);
+  margin: 0 0 24px;
+}
+.s-quote .attribution {
+  font-family: var(--font-sans);
+  font-size: 12px; letter-spacing: .22em;
+  text-transform: uppercase; color: var(--text-2);
+  font-weight: 700; white-space: nowrap;
+}
+.s-quote .attribution-role {
+  font-family: var(--font-sans);
+  font-size: 11px; letter-spacing: .14em;
+  color: var(--text-3); font-weight: 500;
+  text-transform: uppercase; margin-top: 4px;
+  display: block;
+}
+
+/* ── Slide 9: Key Insight ─────────────────────────────────
+   Focal anchor: single italic insight line, full-width center.
+   Stack: eyebrow → insight (serif italic huge) → ornament.
+*/
+.s-insight .body {
+  display: flex; flex-direction: column; justify-content: center;
+  align-items: center;
+  gap: 36px; padding: 0;
+}
+.s-insight .eyebrow { color: var(--accent); }
+.s-insight .insight {
+  font-family: var(--font-serif);
+  font-style: italic; font-weight: 400;
+  font-size: 64px; line-height: 1.18;
+  letter-spacing: -.01em;
+  color: var(--text);
+  text-align: center;
+  max-width: 880px;
+  align-self: center;
+  margin: 0;
+}
+.s-insight .insight em {
+  font-family: var(--font-sans);
+  font-style: normal; font-weight: 800;
+  color: var(--accent);
+}
+.s-insight .ornament {
+  display: block;
+  width: 64px; height: 2px;
+  background: var(--accent);
+  align-self: center;
+  margin: 0;
+}
+
+/* ── Slide 10: CTA ────────────────────────────────────────
+   Focal anchor: button (Đất nung) + H2 italic.
+   Stack center: eyebrow → H2 → body → button (padding-bottom).
+*/
+.s-cta .body {
+  display: flex; flex-direction: column; justify-content: center;
+  align-items: flex-start;
+  gap: 22px; padding: 0 0 24px;
+}
+.s-cta .eyebrow { color: var(--accent); }
+.s-cta h2 {
+  font-family: var(--font-serif);
+  font-style: italic; font-size: 72px;
+  font-weight: 400; line-height: 1.02;
+  letter-spacing: -.02em; color: var(--text);
+  margin: 0;
+}
+.s-cta h2 em {
+  font-family: var(--font-sans);
+  font-style: normal; font-weight: 800;
+  color: var(--accent);
+  font-size: 64px;
+}
+.s-cta p {
+  font-family: var(--font-sans);
+  font-size: 20px; font-weight: 400;
+  line-height: 1.6; color: var(--text-2);
+  margin: 0; max-width: 820px;
+}
+.s-cta .btn-primary {
+  display: table;
+  background: var(--accent); color: #FAF6F0;
+  font-family: var(--font-sans);
+  padding: 18px 30px; border-radius: 4px;
+  font-size: 14px; letter-spacing: .18em;
+  text-transform: uppercase; font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+  margin-top: 8px;
+}
+.s-cta .actions {
+  display: flex; gap: 24px; margin-top: 16px;
+  flex-wrap: wrap;
+}
+.s-cta .actions span {
+  font-family: var(--font-sans);
+  font-size: 12px; letter-spacing: .18em;
+  text-transform: uppercase; color: var(--text-2);
+  font-weight: 600; white-space: nowrap;
+}
+.s-cta .actions span + span::before {
+  content: "·"; color: var(--text-3);
+  margin-right: 22px;
+}

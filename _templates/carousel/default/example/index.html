@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8" />
+<title>xFinance · Default Template · 5 sai lầm khi mới đầu tư</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{--than:#2D2A26;--datnung:#C9572C;--ngoc:#2A8A7F;--nghe:#E8B547;--kem:#FAF6F0;--line:#E4DDD0;--muted:#7A736B}
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:var(--kem);color:var(--than);font-family:'Plus Jakarta Sans',Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1440px;margin:0 auto;padding:56px 48px 72px}
+  header.head{display:flex;align-items:flex-end;justify-content:space-between;border-bottom:1px solid var(--line);padding-bottom:24px;margin-bottom:40px}
+  .head .eyebrow{font-size:12px;letter-spacing:.24em;text-transform:uppercase;color:var(--datnung);font-weight:700;display:flex;align-items:center;gap:10px;margin-bottom:12px}
+  .head .eyebrow .dot{width:8px;height:8px;background:var(--datnung);transform:rotate(45deg)}
+  .head h1{margin:0;font-size:40px;font-weight:800;line-height:1.14;letter-spacing:-.02em}
+  .head h1 em{font-style:normal;color:var(--datnung)}
+  .head p{margin:8px 0 0;font-size:15px;color:var(--muted);max-width:680px;line-height:1.5}
+  .head .meta{display:flex;flex-direction:column;align-items:flex-end;gap:6px;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);font-weight:600}
+  .head .meta b{color:var(--than)}
+  .head .meta .key{display:flex;gap:6px;align-items:center;margin-top:8px}
+  .head .meta .key span{display:grid;place-items:center;width:30px;height:30px;border:1px solid var(--line);border-radius:4px;font-size:13px;color:var(--than);font-weight:700}
+  /* 1:1 thumbnail grid — 5 per row */
+  .grid{display:grid;grid-template-columns:repeat(5,1fr);gap:20px}
+  .card{text-decoration:none;color:inherit;display:flex;flex-direction:column;gap:12px;transition:transform .15s ease}
+  .card:hover{transform:translateY(-3px)}
+  /* Thumb aspect-ratio: 1/1 — iframe scales 1080×1080 at 19.4% */
+  .thumb{aspect-ratio:1/1;background:var(--than);border-radius:6px;overflow:hidden;box-shadow:0 1px 0 rgba(0,0,0,.04),0 12px 28px -18px rgba(45,42,38,.45);position:relative}
+  .thumb iframe{position:absolute;top:0;left:0;border:0;width:1080px;height:1080px;transform-origin:top left;transform:scale(.194);pointer-events:none}
+  .meta-row{display:flex;align-items:center;justify-content:space-between;font-size:11px;letter-spacing:.16em;text-transform:uppercase;font-weight:700}
+  .meta-row .num{color:var(--datnung)}
+  .meta-row .kind{color:var(--muted)}
+  .title{font-size:15px;font-weight:700;letter-spacing:-.01em;line-height:1.3;color:var(--than);margin:0}
+  .actions{margin-top:40px;display:flex;align-items:center;justify-content:space-between;border-top:1px solid var(--line);padding-top:24px}
+  .actions .left{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);font-weight:600}
+  .actions .left b{color:var(--than)}
+  .play{display:inline-flex;align-items:center;gap:12px;background:var(--datnung);color:var(--kem);padding:16px 22px;font-size:13px;letter-spacing:.18em;text-transform:uppercase;font-weight:700;border-radius:4px;text-decoration:none}
+  .play svg{width:14px;height:14px}
+  .brand{display:flex;align-items:center;margin-bottom:16px}
+  .brand img{display:block;height:52px;width:auto;object-fit:contain}
+  .badge{display:inline-block;background:var(--datnung);color:var(--kem);font-size:10px;letter-spacing:.2em;text-transform:uppercase;font-weight:700;padding:4px 10px;border-radius:3px;margin-left:12px;vertical-align:middle}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="head">
+    <div>
+      <div class="brand"><img src="../assets/logo-full-dark.png" alt="xFinance"></div>
+      <div class="eyebrow"><span class="dot"></span>Default Template <span class="badge">DEFAULT</span> &middot; 10 slides &middot; 1080&times;1080</div>
+      <h1>5 sai lầm khi <em>mới đầu tư</em></h1>
+      <p>Template mặc định của hệ thống xFinance Carousel. Cấu trúc đầy đủ 10 slide: Cover → Stat → 5 × Numbered → Quote → Compare → CTA. Bấm vào thumbnail để mở slide ở chế độ trình chiếu.</p>
+    </div>
+    <div class="meta">
+      <span><b>xFinance</b> &middot; Brand v1.0</span>
+      <span><b>Template</b> &middot; Default (Mistake &rarr; Fix)</span>
+      <span><b>Format</b> &middot; 1080 &times; 1080 &middot; 1:1</span>
+      <span><b>Ngày</b> &middot; Tháng 5 / 2026</span>
+      <span class="key"><span>&larr;</span><span>&rarr;</span><span>Esc</span></span>
+    </div>
+  </header>
+  <div class="grid">
+    <a class="card" href="slide-01.html"><div class="thumb"><iframe src="slide-01.html" loading="lazy"></iframe></div><div class="meta-row"><span class="num">01</span><span class="kind">Cover</span></div><h3 class="title">5 sai lầm khi mới đầu tư</h3></a>
+    <a class="card" href="slide-02.html"><div class="thumb"><iframe src="slide-02.html" loading="lazy"></iframe></div><div class="meta-row"><span class="num">02</span><span class="kind">Stat</span></div><h3 class="title">70% nhà đầu tư mới thua lỗ năm đầu</h3></a>
+    <a class="card" href="slide-03.html"><div class="thumb"><iframe src="slide-03.html" loading="lazy"></iframe></div><div class="meta-row"><span class="num">03</span><span class="kind">Numbered · 01</span></div><h3 class="title">Đầu tư không có mục tiêu</h3></a>
+    <a class="card" href="slide-04.html"><div class="thumb"><iframe src="slide-04.html" loading="lazy"></iframe></div><div class="meta-row"><span class="num">04</span><span class="kind">Numbered · 02</span></div><h3 class="title">FOMO — mua theo đám đông</h3></a>
+    <a class="card" href="slide-05.html"><div class="thumb"><iframe src="slide-05.html" loading="lazy"></iframe></div><div class="meta-row"><span class="num">05</span><span class="kind">Numbered · 03</span></div><h3 class="title">Bỏ toàn bộ vào một tài sản</h3></a>
+    <a class="card" href="slide-06.html"><div class="thumb"><iframe src="slide-06.html" loading="lazy"></iframe></div><div class="meta-row"><span class="num">06</span><span class="kind">Numbered · 04</span></div><h3 class="title">Bán tháo khi thị trường giảm</h3></a>
+    <a class="card" href="slide-07.html"><div class="thumb"><iframe src="slide-07.html" loading="lazy"></iframe></div><div class="meta-row"><span class="num">07</span><span class="kind">Numbered · 05</span></div><h3 class="title">Bỏ qua phí và thuế giao dịch</h3></a>
+    <a class="card" href="slide-08.html"><div class="thumb"><iframe src="slide-08.html" loading="lazy"></iframe></div><div class="meta-row"><span class="num">08</span><span class="kind">Quote</span></div><h3 class="title">Trích dẫn — Charlie Munger</h3></a>
+    <a class="card" href="slide-09.html"><div class="thumb"><iframe src="slide-09.html" loading="lazy"></iframe></div><div class="meta-row"><span class="num">09</span><span class="kind">Compare</span></div><h3 class="title">Nên / Không nên đầu tư</h3></a>
+    <a class="card" href="slide-10.html"><div class="thumb"><iframe src="slide-10.html" loading="lazy"></iframe></div><div class="meta-row"><span class="num">10</span><span class="kind">CTA</span></div><h3 class="title">Theo dõi xFinance</h3></a>
+  </div>
+  <div class="actions">
+    <div class="left"><b>10 slides</b> &middot; 1080 &times; 1080 &middot; 1:1 &middot; Facebook / Instagram / LinkedIn</div>
+    <a class="play" href="slide-01.html">
+      Bắt đầu trình chiếu
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="square"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </a>
+  </div>
+</div>
+</body>
+</html>

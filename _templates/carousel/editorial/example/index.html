@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<title>Editorial Template — Preview</title>
+<link rel="stylesheet" href="../assets/style.css">
+<style>
+  body{
+    background:#1a1816; min-height:100vh; padding:48px 32px;
+    font-family: var(--font-sans);
+    overflow:auto;
+  }
+  .header{
+    max-width:1200px; margin:0 auto 36px;
+    display:flex; align-items:flex-end; justify-content:space-between; gap:32px;
+  }
+  .header h1{
+    font-family: var(--font-serif); font-style: italic; font-weight: 600;
+    color:#FAF6F0; font-size:36px; line-height:1; margin:0;
+    letter-spacing:-.01em;
+  }
+  .header .meta{
+    color:rgba(250,246,240,.55); font-size:13px; letter-spacing:.18em;
+    text-transform:uppercase; font-weight:600;
+  }
+  .gallery{
+    max-width:1200px; margin:0 auto;
+    display:grid; grid-template-columns:repeat(4, 1fr); gap:24px;
+  }
+  @media (max-width: 920px){ .gallery{ grid-template-columns:repeat(2, 1fr); } }
+  .card{
+    display:flex; flex-direction:column; align-items:center;
+  }
+  .thumb{
+    width:100%; aspect-ratio:1/1;
+    border-radius:6px; overflow:hidden; position:relative;
+    background:var(--bg);
+    box-shadow: 0 8px 24px rgba(0,0,0,.30);
+  }
+  .thumb iframe{
+    position:absolute; top:0; left:0;
+    width:1080px; height:1080px;
+    transform:scale(.235); transform-origin:0 0;
+    border:none; pointer-events:none;
+  }
+  .label{
+    margin-top:12px; font-size:11px; letter-spacing:.18em;
+    text-transform:uppercase; color:rgba(250,246,240,.65);
+    font-weight:600; text-align:center;
+  }
+  .label b{ color:#FAF6F0; font-weight:800; margin-right:8px; }
+  a.card{ text-decoration:none; }
+  a.card:hover .thumb{ box-shadow: 0 12px 32px rgba(201,87,44,.35); }
+</style>
+</head>
+<body>
+  <div class="header">
+    <h1>Editorial Template — Preview</h1>
+    <span class="meta">10 slides · 1080×1080 · Light editorial / Serif italic</span>
+  </div>
+  <div class="gallery">
+    <a class="card" href="slide-01.html"><div class="thumb"><iframe src="slide-01.html" scrolling="no"></iframe></div><div class="label"><b>01</b> Cover</div></a>
+    <a class="card" href="slide-02.html"><div class="thumb"><iframe src="slide-02.html" scrolling="no"></iframe></div><div class="label"><b>02</b> Stat</div></a>
+    <a class="card" href="slide-03.html"><div class="thumb"><iframe src="slide-03.html" scrolling="no"></iframe></div><div class="label"><b>03</b> Nguyên tắc 01</div></a>
+    <a class="card" href="slide-04.html"><div class="thumb"><iframe src="slide-04.html" scrolling="no"></iframe></div><div class="label"><b>04</b> Nguyên tắc 02</div></a>
+    <a class="card" href="slide-05.html"><div class="thumb"><iframe src="slide-05.html" scrolling="no"></iframe></div><div class="label"><b>05</b> Nguyên tắc 03</div></a>
+    <a class="card" href="slide-06.html"><div class="thumb"><iframe src="slide-06.html" scrolling="no"></iframe></div><div class="label"><b>06</b> Nguyên tắc 04</div></a>
+    <a class="card" href="slide-07.html"><div class="thumb"><iframe src="slide-07.html" scrolling="no"></iframe></div><div class="label"><b>07</b> Nguyên tắc 05</div></a>
+    <a class="card" href="slide-08.html"><div class="thumb"><iframe src="slide-08.html" scrolling="no"></iframe></div><div class="label"><b>08</b> Quote</div></a>
+    <a class="card" href="slide-09.html"><div class="thumb"><iframe src="slide-09.html" scrolling="no"></iframe></div><div class="label"><b>09</b> Insight</div></a>
+    <a class="card" href="slide-10.html"><div class="thumb"><iframe src="slide-10.html" scrolling="no"></iframe></div><div class="label"><b>10</b> CTA</div></a>
+  </div>
+</body>
+</html>

@@ -1,0 +1,223 @@
+/* xFinance Carousel — shared styles
+   Slide format default: 1:1  1080x1080
+   Other formats: 4:5 1080x1350 | 16:9 1920x1080 | 9:16 1080x1920
+*/
+:root{
+  --slide-w: 1080px;
+  --slide-h: 1080px;
+  --than:#2D2A26;
+  --than-2:#221F1C;
+  --than-3:#1A1815;
+  --datnung:#C9572C;
+  --ngoc:#2A8A7F;
+  --nghe:#E8B547;
+  --kem:#FAF6F0;
+  --kem-2:#F2ECE2;
+  --line:rgba(250,246,240,.10);
+  --line-2:rgba(250,246,240,.18);
+  --muted:rgba(250,246,240,.62);
+  --muted-2:rgba(250,246,240,.45);
+  --body-text:rgba(250,246,240,.82);
+}
+
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--than);color:var(--kem);
+  font-family:'Plus Jakarta Sans','Inter',system-ui,sans-serif;
+  -webkit-font-smoothing:antialiased;overflow:hidden;height:100%;}
+
+.stage{position:fixed;top:0;right:0;bottom:0;left:0;display:flex;align-items:center;justify-content:center;}
+.slide{
+  width:var(--slide-w);height:var(--slide-h);background:var(--than);
+  position:relative;overflow:hidden;transform-origin:center center;
+  display:grid;grid-template-rows:auto 1fr auto;padding:56px 72px 52px;
+}
+
+@media print {
+  @page { size: 1080px 1080px; margin: 0; }
+  html,body{width:var(--slide-w);height:var(--slide-h);overflow:visible;background:transparent;}
+  .stage{position:static;display:block;width:var(--slide-w);height:var(--slide-h);}
+  .slide{width:var(--slide-w);height:var(--slide-h);transform:none!important;visibility:visible;page-break-after:always;break-after:page;}
+  .nav-hint,.btn.ghost{display:none!important;}
+  .corner-tl,.corner-tr,.corner-bl,.corner-br,.deco,.big-num{display:none!important;}
+  .s-foot .progress{display:none!important;}
+}
+
+/* HEADER */
+.s-head{display:flex;align-items:center;justify-content:space-between;position:relative;z-index:5}
+.logo{display:flex;align-items:center}
+.logo img{display:block;height:48px;width:auto;object-fit:contain}
+.s-head .topic{
+  display:flex;align-items:center;gap:10px;
+  font-size:13px;letter-spacing:.06em;
+  color:var(--muted);font-weight:600;white-space:nowrap;
+}
+.s-head .topic::before{content:"—";color:var(--ngoc);font-size:12px;line-height:1;flex-shrink:0;display:block}
+
+/* FOOTER */
+.s-foot{
+  display:flex;align-items:center;justify-content:space-between;
+  padding-top:18px;border-top:1px solid var(--line);
+  font-size:13px;letter-spacing:.06em;
+  color:var(--muted);font-weight:500;position:relative;z-index:5;
+}
+.s-foot .name{font-style:italic;font-weight:500}
+.s-foot .count{color:var(--kem);font-weight:700;font-style:normal}
+.s-foot .count b{color:var(--datnung)}
+.s-foot .progress{flex:1;max-width:200px;height:2px;background:var(--line-2);margin:0 24px;position:relative;overflow:hidden}
+.s-foot .progress::after{content:"";position:absolute;left:0;top:0;bottom:0;background:var(--datnung);width:var(--p, 10%)}
+
+/* BODY base */
+.body{position:relative;display:flex;flex-direction:column;justify-content:center;padding:40px 0}
+
+/* Reusable */
+.tag{display:flex;align-items:center;gap:10px;font-size:13px;letter-spacing:.06em;color:var(--ngoc);font-weight:700;white-space:nowrap;}
+.tag::before{content:"—";color:var(--ngoc);font-size:14px;line-height:1;flex-shrink:0;display:block}
+.hl{background:var(--nghe);color:var(--than);padding:8px 12px 3px;border-radius:2px;font-weight:800}
+.accent{color:var(--datnung)}
+.ul-acc{display:block;width:48px;height:3px;background:var(--ngoc);margin:20px 0}
+
+/* CTA button — display:table (WeasyPrint compat, not inline-flex) */
+.btn{display:table;background:var(--datnung);color:var(--kem);font-weight:700;font-size:16px;letter-spacing:.06em;padding:18px 26px;border-radius:4px;text-decoration:none;white-space:nowrap;}
+.btn.ghost{background:transparent;border:1px solid var(--line-2);color:var(--kem)}
+
+/* Big background number */
+.big-num{position:absolute;font-weight:800;line-height:.78;letter-spacing:-.06em;color:rgba(250,246,240,.06);pointer-events:none;font-family:'Plus Jakarta Sans',sans-serif;}
+
+/* Nav hint (browser only) */
+.nav-hint{position:absolute;right:40px;bottom:40px;display:flex;gap:10px;color:var(--muted-2);font-size:12px;letter-spacing:.06em;font-weight:600;align-items:center;z-index:6;}
+.nav-hint .keys{display:flex;gap:6px}
+.nav-hint .keys span{display:flex;align-items:center;justify-content:center;width:28px;height:28px;border:1px solid var(--line-2);border-radius:4px;font-size:13px;color:var(--kem);}
+
+/* Corner decorations */
+.corner-tl,.corner-tr,.corner-bl,.corner-br{position:absolute;width:70px;height:70px;}
+.corner-tl{top:0;left:0;border-bottom:1px solid var(--line);border-right:1px solid var(--line)}
+.corner-tr{top:0;right:0;border-bottom:1px solid var(--line);border-left:1px solid var(--line)}
+
+/* Title utilities */
+.t-title{font-size:64px;font-weight:800;line-height:1.04;letter-spacing:-.025em;margin:0;color:var(--kem)}
+.t-sub{font-size:30px;font-weight:600;line-height:1.22;letter-spacing:-.01em;color:var(--kem);margin:0}
+.t-body{font-size:20px;font-weight:400;line-height:1.55;color:var(--body-text);margin:0;max-width:780px}
+.t-eyebrow{font-size:14px;letter-spacing:.06em;color:var(--datnung);font-weight:700;margin-bottom:20px}
+
+/* =====================================================================
+   SLIDE PATTERNS — class-based, dùng trực tiếp trong slide HTML
+   Slide chỉ cần content + giữ <style> rỗng (hoặc 1-2 override khi cần)
+   ===================================================================== */
+
+/* COVER (slide-01) — .s-cover */
+.s-cover .body{padding-top:0;padding-bottom:0;justify-content:center;gap:28px;transform:translateY(-18px)}
+.s-cover .eyebrow{font-size:15px;letter-spacing:.06em;color:var(--datnung);font-weight:700;display:flex;align-items:center;gap:12px}
+.s-cover .eyebrow::before{content:"—";color:var(--datnung);font-size:16px;line-height:1;flex-shrink:0;display:block}
+.s-cover h1{font-size:96px;font-weight:800;line-height:1.26;letter-spacing:-.03em;margin:0;color:var(--kem)}
+.s-cover h1 .num{color:var(--datnung)}
+/* .hl: KHÔNG dùng display:inline-block (weasyprint-compat §10) — giữ inline để tránh
+   descender dòng trên lẹm vào ô highlight. line-height kế thừa từ h1 (1.26). */
+.s-cover h1 .hl{background:var(--nghe);color:var(--than);padding:6px 16px 8px;border-radius:4px;}
+.s-cover .desc{font-size:22px;line-height:1.55;color:var(--muted);max-width:800px;margin:0;font-weight:400}
+.s-cover .arrow{width:64px;height:64px;background:var(--datnung);border-radius:999px;display:flex;align-items:center;justify-content:center;align-self:flex-start;text-decoration:none;flex-shrink:0}
+.s-cover .arrow svg{width:24px;height:24px;color:var(--kem)}
+.s-cover .corner-tr{top:0;right:0;width:100px;height:100px;border-bottom:1px solid var(--line);border-left:1px solid var(--line)}
+.s-cover .ep{font-size:12px;letter-spacing:.06em;color:var(--muted);font-weight:600;background:#3a3633;padding:7px 13px;border-radius:3px}
+
+/* STAT (slide-02) — .s-stat. Số lớn trái, nội dung phải */
+.s-stat .body{display:grid;grid-template-columns:1fr 1.3fr;gap:56px;align-items:center;padding:0}
+.s-stat .left{display:flex;flex-direction:column;gap:20px}
+.s-stat .pct{font-size:240px;font-weight:800;line-height:.82;letter-spacing:-.06em;color:var(--datnung);margin:0;font-feature-settings:"tnum" 1}
+.s-stat .pct sup{font-size:96px;color:var(--nghe);font-weight:800;letter-spacing:0;vertical-align:top;line-height:1;margin-left:4px}
+.s-stat .right h2{font-size:44px;font-weight:800;line-height:1.18;letter-spacing:-.02em;margin:0;color:var(--kem)}
+.s-stat .right h2 em{font-style:normal;color:var(--datnung)}
+.s-stat .right p{font-size:18px;line-height:1.6;color:var(--muted);margin:20px 0 0;font-weight:400}
+.s-stat .src{margin-top:28px;padding-top:20px;border-top:1px solid var(--line-2);font-size:12px;letter-spacing:.06em;color:var(--muted-2);font-weight:600}
+.s-stat .src b{color:var(--ngoc)}
+
+/* NUMBERED (slide-03..07) — .s-num. Header label/num + title + body + fix */
+.s-num .body{padding:0;display:flex;flex-direction:column;justify-content:center;gap:0}
+.s-num .top-row{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:24px;position:relative;z-index:2}
+.s-num .label{font-size:13px;letter-spacing:.06em;color:var(--ngoc);font-weight:700;display:flex;align-items:center;gap:12px;white-space:nowrap}
+.s-num .label::before{content:"—";color:var(--ngoc);font-size:14px;line-height:1;flex-shrink:0;display:block}
+/* num-mark: KHÔNG dùng display:flex (xem _skills/weasyprint-compat.md §2) */
+.s-num .num-mark{font-size:120px;font-weight:800;line-height:1;letter-spacing:-.05em;color:var(--datnung);margin:0;white-space:nowrap}
+.s-num .num-mark .of{font-size:28px;color:var(--muted);font-weight:600;letter-spacing:0;margin-left:6px}
+.s-num h2{font-size:54px;font-weight:800;line-height:1.14;letter-spacing:-.02em;margin:0;color:var(--kem);position:relative;z-index:2}
+.s-num h2 .ac{color:var(--datnung)}
+.s-num .ul-acc{margin:18px 0 16px;width:56px;position:relative;z-index:2}
+.s-num .body p{font-size:20px;line-height:1.6;color:var(--muted);margin:0;font-weight:400;position:relative;z-index:2}
+.s-num .fix{margin-top:24px;padding:18px 22px;border-left:3px solid var(--nghe);background:rgba(232,181,71,.06);position:relative;z-index:2}
+.s-num .fix .k{font-size:12px;letter-spacing:.06em;color:var(--nghe);font-weight:700;margin-bottom:6px}
+.s-num .fix .v{font-size:18px;line-height:1.5;color:var(--kem);font-weight:500;margin:0}
+
+/* QUOTE (slide-08) — .s-quote */
+.s-quote{background:var(--than-2)}
+.s-quote .body{justify-content:center;padding:0;position:relative}
+.s-quote .qmark{display:none}
+.s-quote blockquote{margin:0;padding:0;max-width:900px}
+.s-quote q{font-size:52px;font-weight:700;line-height:1.28;letter-spacing:-.02em;color:var(--kem);quotes:none;display:block}
+.s-quote q::before,.s-quote q::after{content:""}
+.s-quote q em{font-style:normal;color:var(--datnung)}
+.s-quote .by{margin:36px 0 0 0;display:flex;align-items:center;gap:20px}
+.s-quote .by .ln{display:block;flex-shrink:0;width:60px;height:0;border-top:2px solid var(--ngoc);align-self:center}
+.s-quote .by .who{font-size:20px;font-weight:700;color:var(--kem);letter-spacing:-.005em}
+.s-quote .by .role{font-size:16px;color:var(--muted);font-weight:500;margin-top:4px}
+
+/* COMPARE (slide-09) — .s-cmp. 2-col bad/good */
+.s-cmp .body{padding:0;display:flex;flex-direction:column;justify-content:center;gap:28px}
+.s-cmp h2{font-size:44px;font-weight:800;line-height:1.18;letter-spacing:-.02em;margin:0;color:var(--kem)}
+.s-cmp h2 em{font-style:normal;color:var(--datnung)}
+.s-cmp .grid{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+.s-cmp .col{padding:24px 28px;border-radius:6px;border:1px solid var(--line)}
+.s-cmp .col.bad{background:rgba(201,87,44,.05);border-color:rgba(201,87,44,.22)}
+.s-cmp .col.good{background:rgba(42,138,127,.06);border-color:rgba(42,138,127,.28)}
+.s-cmp .col h3{display:flex;align-items:center;gap:12px;margin:0 0 18px;font-size:14px;letter-spacing:.06em;font-weight:700}
+.s-cmp .col.bad h3{color:var(--datnung)}
+.s-cmp .col.good h3{color:var(--ngoc)}
+.s-cmp .col h3 .ic{width:28px;height:28px;border-radius:999px;display:flex;align-items:center;justify-content:center;flex:none}
+.s-cmp .col.bad h3 .ic{background:var(--datnung);color:var(--kem)}
+.s-cmp .col.good h3 .ic{background:var(--ngoc);color:var(--kem)}
+.s-cmp .col h3 .ic svg{width:14px;height:14px}
+.s-cmp ul{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:12px}
+.s-cmp li{display:flex;align-items:flex-start;gap:10px;font-size:17px;line-height:1.5;color:var(--kem);font-weight:500}
+.s-cmp li::before{content:"";flex:none;display:block;width:0;height:0;border:4px solid currentColor;border-radius:999px;margin-top:9px;align-self:flex-start}
+.s-cmp .col.bad li{color:rgba(250,246,240,.82)}
+.s-cmp .col.good li{color:var(--kem)}
+.s-cmp .col.bad li::before{border-color:var(--datnung)}
+.s-cmp .col.good li::before{border-color:var(--ngoc)}
+
+/* CTA (slide-10) — .s-cta. Trái headline, phải cards */
+.s-cta{background:var(--than)}
+.s-cta .deco{position:absolute;right:-30px;bottom:-80px;font-size:320px;font-weight:800;line-height:.78;letter-spacing:-.05em;color:rgba(201,87,44,.07);user-select:none;pointer-events:none}
+.s-cta .body{justify-content:center;padding:0 0 36px;display:grid;grid-template-columns:1.3fr 1fr;gap:48px;align-items:center}
+.s-cta .left .eyebrow{font-size:14px;letter-spacing:.06em;color:var(--nghe);font-weight:700;margin-bottom:24px;display:flex;align-items:center;gap:12px}
+.s-cta .left .eyebrow::before{content:"—";color:var(--nghe);font-size:16px;line-height:1;flex-shrink:0;display:block}
+.s-cta h2{font-size:72px;font-weight:800;line-height:1.1;letter-spacing:-.03em;margin:0;color:var(--kem)}
+.s-cta h2 em{font-style:normal;color:var(--datnung);display:block}
+.s-cta .left p{font-size:20px;line-height:1.5;color:var(--muted);margin:24px 0 32px;font-weight:400}
+.s-cta .ctas{display:block}
+.s-cta .btn-primary{background:var(--datnung);color:var(--kem);padding:20px 26px;font-size:15px;letter-spacing:.06em;font-weight:700;border-radius:4px;display:table;white-space:nowrap;text-decoration:none;margin-bottom:12px}
+.s-cta .btn-primary svg{width:16px;height:16px}
+.s-cta .btn-ghost{border:1px solid var(--line-2);color:var(--kem);padding:20px 22px;font-size:15px;letter-spacing:.06em;font-weight:700;border-radius:4px;display:table;white-space:nowrap;text-decoration:none}
+.s-cta .right{display:table;width:100%}
+.s-cta .card{background:var(--than-2);border:1px solid var(--line);padding:20px 22px;border-radius:6px;display:block;margin-bottom:12px}
+.s-cta .card .ic{width:40px;height:40px;border-radius:999px;display:flex;align-items:center;justify-content:center;float:left;margin-right:18px}
+.s-cta .card .ic.a{background:var(--datnung)}
+.s-cta .card .ic.b{background:var(--ngoc)}
+.s-cta .card .ic.c{background:var(--nghe)}
+.s-cta .card .ic svg{width:18px;height:18px;color:var(--kem)}
+.s-cta .card .ic.c svg{color:var(--than)}
+.s-cta .card .k{font-size:11px;letter-spacing:.06em;color:var(--muted);font-weight:600;margin-bottom:3px}
+.s-cta .card .v{font-size:18px;color:var(--kem);font-weight:700;letter-spacing:-.005em}
+.s-cta .logo-end{display:block;overflow:hidden}
+.s-cta .logo-end img{height:32px;opacity:.7}
+
+/* =====================================================
+   @media print — WeasyPrint fixes (minimal, safe)
+   ===================================================== */
+@media print {
+  /* Prevent overflow:hidden being ignored in print layout */
+  .slide{overflow:hidden!important}
+  /* Cover: translateY(-18px) shifts body off-page in WeasyPrint */
+  .s-cover .body{transform:none!important}
+  /* Stat + CTA: use align-self:center so the body grid-item centers
+     itself vertically within its 1fr grid row — no need for height hacks. */
+  .s-stat .body{align-self:center!important}
+  .s-cta .body{align-self:center!important}
+}

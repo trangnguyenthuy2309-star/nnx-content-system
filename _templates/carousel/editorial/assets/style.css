@@ -1,0 +1,416 @@
+/* xFinance Carousel — Editorial Template (rebuild 2026-05-05)
+   Light editorial · Cormorant Garamond serif italic + Plus Jakarta Sans
+   Per layout-composition.md: every body uses justify-content:center.
+*/
+
+@font-face {
+  font-family: 'Cormorant Garamond';
+  font-style: normal; font-weight: 400;
+  src: local('Cormorant Garamond Regular'), local('CormorantGaramond-Regular'),
+       local('Georgia'), local('DejaVu Serif');
+}
+@font-face {
+  font-family: 'Cormorant Garamond';
+  font-style: italic; font-weight: 400;
+  src: local('Cormorant Garamond Italic'), local('CormorantGaramond-Italic'),
+       local('Georgia Italic'), local('DejaVu Serif Italic');
+}
+@font-face {
+  font-family: 'Cormorant Garamond';
+  font-style: italic; font-weight: 600;
+  src: local('Cormorant Garamond SemiBold Italic'), local('CormorantGaramond-SemiBoldItalic'),
+       local('Georgia Bold Italic'), local('DejaVu Serif Bold Italic');
+}
+
+:root {
+  --slide-w: 1080px;
+  --slide-h: 1080px;
+  --bg: #FAF6F0;
+  --bg-2: #F2ECE2;
+  --text: #2D2A26;
+  --text-2: rgba(45,42,38,.62);
+  --text-3: rgba(45,42,38,.42);
+  --grey-box: #E2D9CE;
+  --accent: #C9572C;
+  --accent-2: #2A8A7F;
+  --line: rgba(45,42,38,.14);
+  --line-2: rgba(45,42,38,.08);
+  --font-serif: 'Cormorant Garamond', 'Georgia', 'DejaVu Serif', serif;
+  --font-sans: 'Plus Jakarta Sans', 'Inter', system-ui, sans-serif;
+}
+
+* { box-sizing: border-box; }
+html, body {
+  margin: 0; padding: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  overflow: hidden;
+  height: 100%;
+}
+
+.stage {
+  position: fixed; top: 0; right: 0; bottom: 0; left: 0;
+  display: flex; align-items: center; justify-content: center;
+}
+
+.slide {
+  width: var(--slide-w); height: var(--slide-h);
+  background: var(--bg);
+  position: relative; overflow: hidden;
+  transform-origin: center center;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  padding: 64px 80px 56px;
+}
+
+@media print {
+  @page { size: 1080px 1080px; margin: 0; }
+  html, body {
+    width: var(--slide-w); height: var(--slide-h);
+    overflow: visible; background: transparent;
+  }
+  .stage {
+    position: static; display: block;
+    width: var(--slide-w); height: var(--slide-h);
+  }
+  .slide {
+    width: var(--slide-w); height: var(--slide-h);
+    transform: none !important; visibility: visible;
+    page-break-after: always; break-after: page;
+  }
+  .corner-tl, .corner-tr, .corner-bl, .corner-br, .deco { display: none !important; }
+  .nav-hint, .btn.ghost { display: none !important; }
+  .s-foot .progress { display: none !important; }
+}
+
+.s-head {
+  display: flex; align-items: center; justify-content: space-between;
+  position: relative; z-index: 5;
+}
+.logo { display: flex; align-items: center; }
+.logo img { display: block; height: 36px; width: auto; object-fit: contain; }
+.s-head .topic {
+  font-size: 11px; letter-spacing: .22em; text-transform: uppercase;
+  color: var(--text-2); font-weight: 600;
+  white-space: nowrap;
+}
+
+.s-foot {
+  display: flex; align-items: center; justify-content: space-between;
+  padding-top: 16px; border-top: 1px solid var(--line);
+  font-size: 11px; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--text-2); font-weight: 500;
+  position: relative; z-index: 5;
+}
+.s-foot .name {
+  font-style: italic; font-weight: 400;
+  font-family: var(--font-serif);
+  letter-spacing: .04em; text-transform: none;
+  font-size: 14px;
+}
+.s-foot .count { color: var(--text); font-weight: 700; white-space: nowrap; }
+.s-foot .count b { color: var(--accent); }
+.s-foot .progress {
+  flex: 1; max-width: 160px; height: 1px;
+  background: var(--line); margin: 0 20px;
+  position: relative; overflow: hidden;
+}
+.s-foot .progress::after {
+  content: ""; position: absolute; left: 0; top: 0; bottom: 0;
+  background: var(--accent); width: var(--p, 10%);
+}
+
+.body {
+  position: relative;
+  display: flex; flex-direction: column; justify-content: center;
+  padding: 0;
+}
+
+.grey-box {
+  background: var(--grey-box);
+  padding: 28px 40px;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+  color: var(--text);
+  text-align: center;
+  letter-spacing: -.005em;
+}
+
+.eyebrow {
+  font-family: var(--font-sans);
+  font-size: 12px; letter-spacing: .26em; text-transform: uppercase;
+  color: var(--text-2); font-weight: 700;
+  white-space: nowrap;
+}
+
+.btn {
+  display: table;
+  background: var(--accent); color: #FAF6F0;
+  font-family: var(--font-sans);
+  font-weight: 700; font-size: 14px;
+  letter-spacing: .18em; text-transform: uppercase;
+  padding: 18px 30px; border-radius: 4px;
+  text-decoration: none; white-space: nowrap;
+}
+.btn.ghost {
+  background: transparent;
+  border: 1px solid var(--line);
+  color: var(--text);
+}
+
+/* ===== Slide 1: Cover ===== */
+.s-cover .body {
+  display: flex; flex-direction: column; justify-content: center;
+  gap: 20px; padding: 0;
+}
+.s-cover .eyebrow { margin-bottom: 8px; }
+.s-cover h1 {
+  font-family: var(--font-sans);
+  font-size: 96px; font-weight: 800;
+  line-height: 1.02; letter-spacing: -.035em;
+  color: var(--text); margin: 0;
+}
+.s-cover .hl-box {
+  display: block; align-self: stretch;
+  background: var(--grey-box);
+  padding: 22px 36px;
+  font-family: var(--font-serif); font-style: italic;
+  font-size: 60px; font-weight: 400;
+  line-height: 1.12; letter-spacing: -.01em;
+  color: var(--text);
+  text-align: left;
+}
+.s-cover .author {
+  font-family: var(--font-serif); font-style: italic;
+  font-size: 18px; color: var(--text-2);
+  font-weight: 400; letter-spacing: .02em;
+  margin: 0;
+}
+.s-cover .arrow-row {
+  display: flex; justify-content: flex-end; align-items: center;
+  margin-top: 12px;
+}
+.s-cover .arrow {
+  width: 56px; height: 56px;
+  background: var(--accent); border-radius: 999px;
+  display: flex; align-items: center; justify-content: center;
+  text-decoration: none; flex-shrink: 0;
+  font-size: 22px; color: #FAF6F0;
+  font-family: var(--font-sans);
+}
+
+/* ===== Slide 2: Stat ===== */
+.s-stat .body {
+  display: flex; flex-direction: column; justify-content: center;
+  gap: 18px; padding: 0;
+}
+.s-stat .eyebrow { color: var(--accent-2); }
+.s-stat .num-mark {
+  display: flex; align-items: flex-end; gap: 8px;
+  margin-top: 4px;
+}
+.s-stat .big-num {
+  font-family: var(--font-sans); font-weight: 800;
+  font-size: 200px; line-height: .85;
+  color: var(--accent);
+  letter-spacing: -.04em;
+}
+.s-stat .of {
+  font-family: var(--font-sans); font-weight: 800;
+  font-size: 72px; color: var(--accent);
+  margin-bottom: 8px;
+}
+.s-stat .headline {
+  font-family: var(--font-serif); font-style: italic;
+  font-size: 44px; font-weight: 400;
+  line-height: 1.18; color: var(--text);
+  margin: 8px 0 0; max-width: 820px;
+}
+.s-stat .headline em {
+  font-family: var(--font-serif); font-style: italic;
+  font-weight: 600; color: var(--accent);
+}
+.s-stat .body-text {
+  font-family: var(--font-sans);
+  font-size: 20px; font-weight: 400;
+  line-height: 1.6; color: var(--text-2);
+  margin: 4px 0 0; max-width: 760px;
+}
+.s-stat .src {
+  font-family: var(--font-sans);
+  font-size: 12px; color: var(--text-3);
+  font-weight: 500; letter-spacing: .06em;
+  margin-top: 4px;
+}
+
+/* ===== Slides 3-7: Numbered ===== */
+.s-num .body {
+  display: flex; flex-direction: column; justify-content: center;
+  gap: 18px; padding: 0;
+}
+.s-num .label-row {
+  display: flex; align-items: center; gap: 16px;
+}
+.s-num .label-row .label {
+  font-family: var(--font-sans);
+  font-size: 12px; letter-spacing: .26em; text-transform: uppercase;
+  color: var(--accent-2); font-weight: 700;
+  white-space: nowrap;
+}
+.s-num .label-row .label::before {
+  content: ""; display: inline-block;
+  width: 28px; height: 2px; background: var(--accent-2);
+  margin-right: 14px; vertical-align: middle;
+}
+.s-num .label-row .num-count {
+  font-family: var(--font-sans);
+  font-size: 12px; font-weight: 700;
+  color: var(--text-3); letter-spacing: .12em;
+  white-space: nowrap;
+}
+.s-num h2 {
+  font-family: var(--font-sans);
+  font-size: 64px; font-weight: 800;
+  line-height: 1.06; letter-spacing: -.025em;
+  color: var(--text); margin: 0;
+}
+.s-num .grey-box {
+  align-self: stretch;
+  padding: 24px 36px;
+  font-size: 44px;
+  line-height: 1.18;
+  text-align: center;
+}
+.s-num .body-text {
+  font-family: var(--font-sans);
+  font-size: 20px; font-weight: 400;
+  line-height: 1.6; color: var(--text-2);
+  margin: 0; max-width: 820px;
+  align-self: center;
+  text-align: center;
+}
+
+/* ===== Slide 8: Quote ===== */
+.s-quote .body {
+  display: flex; flex-direction: column; justify-content: center;
+  align-items: center;
+  gap: 0; padding: 0;
+}
+.s-quote .quote-card {
+  background: var(--grey-box);
+  border-radius: 6px;
+  padding: 56px 60px 48px;
+  text-align: center;
+  max-width: 820px;
+  align-self: center;
+}
+.s-quote .avatar {
+  width: 64px; height: 64px;
+  border-radius: 999px;
+  background: rgba(45,42,38,.20);
+  margin: 0 auto 24px;
+  display: block;
+}
+.s-quote blockquote {
+  font-family: var(--font-serif);
+  font-style: italic; font-size: 44px;
+  font-weight: 400; line-height: 1.24;
+  letter-spacing: -.005em;
+  color: var(--text);
+  margin: 0 0 24px;
+}
+.s-quote .attribution {
+  font-family: var(--font-sans);
+  font-size: 12px; letter-spacing: .22em;
+  text-transform: uppercase; color: var(--text-2);
+  font-weight: 700; white-space: nowrap;
+}
+.s-quote .attribution-role {
+  font-family: var(--font-sans);
+  font-size: 11px; letter-spacing: .14em;
+  color: var(--text-3); font-weight: 500;
+  text-transform: uppercase; margin-top: 4px;
+  display: block;
+}
+
+/* ===== Slide 9: Insight ===== */
+.s-insight .body {
+  display: flex; flex-direction: column; justify-content: center;
+  align-items: center;
+  gap: 36px; padding: 0;
+}
+.s-insight .eyebrow { color: var(--accent); }
+.s-insight .insight {
+  font-family: var(--font-serif);
+  font-style: italic; font-weight: 400;
+  font-size: 64px; line-height: 1.18;
+  letter-spacing: -.01em;
+  color: var(--text);
+  text-align: center;
+  max-width: 880px;
+  align-self: center;
+  margin: 0;
+}
+.s-insight .insight em {
+  font-family: var(--font-sans);
+  font-style: normal; font-weight: 800;
+  color: var(--accent);
+}
+.s-insight .ornament {
+  display: block;
+  width: 64px; height: 2px;
+  background: var(--accent);
+  align-self: center;
+  margin: 0;
+}
+
+/* ===== Slide 10: CTA ===== */
+.s-cta .body {
+  display: flex; flex-direction: column; justify-content: center;
+  align-items: flex-start;
+  gap: 22px; padding: 0 0 24px;
+}
+.s-cta .eyebrow { color: var(--accent); }
+.s-cta h2 {
+  font-family: var(--font-serif);
+  font-style: italic; font-size: 72px;
+  font-weight: 400; line-height: 1.02;
+  letter-spacing: -.02em; color: var(--text);
+  margin: 0;
+}
+.s-cta h2 em {
+  font-family: var(--font-sans);
+  font-style: normal; font-weight: 800;
+  color: var(--accent);
+  font-size: 64px;
+}
+.s-cta p {
+  font-family: var(--font-sans);
+  font-size: 20px; font-weight: 400;
+  line-height: 1.6; color: var(--text-2);
+  margin: 0; max-width: 820px;
+}
+.s-cta .btn-primary {
+  display: table;
+  background: var(--accent); color: #FAF6F0;
+  font-family: var(--font-sans);
+  padding: 18px 30px; border-radius: 4px;
+  font-size: 14px; letter-spacing: .18em;
+  text-transform: uppercase; font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+  margin-top: 8px;
+}
+.s-cta .actions {
+  display: flex; gap: 24px; margin-top: 16px;
+  flex-wrap: wrap;
+}
+.s-cta .actions span {
+  font-family: var(--font-sans);
+  font-size: 12px; letter-spacing: .18em;
+  text-transform: uppercase; color: var(--text-2);
+  font-weight: 600; white-space: nowrap;
+}
